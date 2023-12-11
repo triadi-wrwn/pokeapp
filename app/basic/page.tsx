@@ -1,48 +1,37 @@
-import DataTable from '@/components/faceted/DataTable/DataTable';
-import React from 'react';
+import { DataTable } from '@/components/faceted/DataTable';
+import { getPokemons } from '@/services/pokemon.service';
 import { columns } from './data/columns';
-import { Pokemons } from '@/types/pokemon.type';
 
-const getData = async () => {
-	const dataApi = await fetch(
-		`${process.env.API_URL}/pokemon?limit=10&offset=0`
-	);
-	return await dataApi.json();
-}
-const Basic = async () => {
-	const {results} = await getData();
-	const data: Pokemons[] = results;
-	console.log(data);
+const Basic = async ({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) => {
+  const limit = searchParams['limit'] ?? '10';
+  const offset = searchParams['offset'] ?? '0';
+  const { results, next, previous, count } = await getPokemons({
+    limit: Number(limit) ?? 10,
+    offset: Number(offset) ?? 0,
+  });
 
   return (
-		<main className='flex min-h-screen flex-col items-center justify-between p-24'>
-			<div className='w-full'>
-				<div className='rounded-md border'>
-					<DataTable data={data} columns={columns}/>
-				</div>
-				{/* <div className='flex items-center justify-end space-x-2 py-4'>
-					<div className='space-x-2'>
-						<Button
-							variant='outline'
-							size='sm'
-							onClick={() => table.previousPage()}
-							disabled={!table.getCanPreviousPage()}
-						>
-							Previous
-						</Button>
-						<Button
-							variant='outline'
-							size='sm'
-							onClick={() => table.nextPage()}
-							disabled={!table.getCanNextPage()}
-						>
-							Next
-						</Button>
-					</div>
-				</div> */}
-			</div>
-		</main>
-	);
-}
+    <>
+      <div className="text-center text-2xl">PokemonDex</div>
+      <main className="flex min-h-screen flex-col items-center justify-between p-24 pt-12">
+        <div className="w-full">
+          <div className="rounded-md border border-gray-600">
+            <DataTable
+              data={results}
+              columns={columns}
+              next={next}
+              previous={previous}
+              total={count}
+            />
+          </div>
+        </div>
+      </main>
+    </>
+  );
+};
 
 export default Basic;
