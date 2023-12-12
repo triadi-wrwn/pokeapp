@@ -1,3 +1,4 @@
+'use client';
 import {
   Dialog,
   DialogContent,
@@ -9,9 +10,9 @@ import {
 import { ModalProps } from './Modal.type';
 
 const Modal = (props: ModalProps) => {
-  const { trigger, open, title, subtitle, children } = props;
+  const { trigger, open, title, subtitle, children, openChange } = props;
   return (
-    <Dialog open={open}>
+    <Dialog open={open} onOpenChange={openChange}>
       <DialogTrigger>{trigger}</DialogTrigger>
       <DialogContent className="bg-gradient-to-r from-rose-100 to-teal-100">
         <DialogHeader>

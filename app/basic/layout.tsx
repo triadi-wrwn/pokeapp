@@ -1,9 +1,7 @@
-import { Modal } from '@/components/faceted/Modal';
-import PokeballSvg from '@/components/icons/PokeballSvg';
 import { cn } from '@/lib/utils';
 import type { Metadata } from 'next';
 import '../globals.css';
-import MyPokemon from './components/MyPokemon';
+import Header from './components/Header';
 
 export const metadata: Metadata = {
   title: 'Basic',
@@ -21,14 +19,7 @@ export default function BasicLayout({
         'font-sans antialiased p-8 bg-gradient-to-br from-yellow-200 via-green-200 to-green-300'
       )}
     >
-      <div className="absolute right-8 top-8">
-        <Modal
-          trigger={<PokeballSvg width={50} height={50} />}
-          title="My Pokemon"
-        >
-          <MyPokemon />
-        </Modal>
-      </div>
+      <Header />
       {children}
     </main>
   );

@@ -100,3 +100,56 @@
 .scrollbar-track-gray-50::-webkit-scrollbar-thumb {
   background: #6638b6;
 }
+
+.poison {
+  @apply bg-purple-600;
+}
+.grass {
+  @apply bg-green-600;
+}
+.normal {
+  @apply bg-amber-500;
+}
+.fighting,
+.fire {
+  @apply bg-red-400;
+}
+.flying {
+  @apply bg-cyan-500;
+}
+.ground {
+  @apply bg-orange-600;
+}
+.rock {
+  @apply bg-gray-500;
+}
+.bug {
+  @apply bg-emerald-500;
+}
+.ghost,
+.psychic,
+.ice {
+  @apply bg-slate-300 text-gray-700;
+}
+.steel {
+  @apply bg-zinc-400 text-gray-800;
+}
+.water {
+  @apply bg-blue-500;
+}
+.electric {
+  @apply bg-yellow-500;
+}
+.dragon {
+  @apply bg-lime-700;
+}
+.dark,
+.shadow {
+  @apply bg-gray-700;
+}
+.fairy {
+  @apply bg-lime-300 text-gray-700;
+}
+.unknown {
+  @apply bg-white text-gray-700;
+}

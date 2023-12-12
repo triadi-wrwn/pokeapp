@@ -4,4 +4,5 @@ export type ModalProps = {
   subtitle?: string;
   children: React.ReactNode;
   open?: boolean;
+  openChange: (e: any) => void;
 };

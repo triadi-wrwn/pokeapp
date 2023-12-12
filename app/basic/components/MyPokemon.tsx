@@ -1,7 +1,9 @@
 'use client';
 
+import Badge from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { useToast } from '@/components/ui/use-toast';
 import capitalize from '@/lib/capitalize';
 import { MY_POKE_KEY } from '@/lib/constants';
 import { getStorage, setStorage } from '@/services/storage.services';
@@ -9,14 +11,14 @@ import { StashedPokemon } from '@/types/pokemon.type';
 import { Cross2Icon } from '@radix-ui/react-icons';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import useModal from '../hook/useModal';
 
 const MyPokemon = () => {
-  const router = useRouter();
   const initData: StashedPokemon[] = getStorage(MY_POKE_KEY);
   const [pokemons, setPokemons] = useState<StashedPokemon[]>(initData);
 
+  const { toast } = useToast();
   const handleRemove = (poke: StashedPokemon) => {
     setPokemons((state) => {
       const newState = [...state];
@@ -24,11 +26,18 @@ const MyPokemon = () => {
       setStorage(MY_POKE_KEY, removedData);
       return [...removedData];
     });
+    toast({
+      variant: 'primary',
+      description: 'Pokemon removed !',
+      duration: 2000,
+    });
   };
 
-  const handleNavigate = (poke: StashedPokemon) => {
-    router.replace(`./basic/${poke.name}`);
-  };
+  const { open } = useModal();
+  useEffect(() => {
+    console.log('modal is open', open);
+  }, [open]);
+
   return (
     <div className="max-h-[80vh] overflow-auto pb-4">
       <div className="grid grid-cols-6 gap-4">
@@ -44,7 +53,7 @@ const MyPokemon = () => {
             </Button>
             <Link href={`/basic/${poke.name}`}>
               <Card className="shadow-md hover:shadow-lg bg-[conic-gradient(at_top_right,_var(--tw-gradient-stops))] from-yellow-200 via-green-200 to-green-300 transition-all ease-in-out duration-300">
-                <CardContent className="p-4 text-center">
+                <CardContent className="p-2 text-center">
                   <div className="w-full h-16 mx-auto mb-6 mt-2 bg-white flex items-center justify-center rounded-lg">
                     <Image
                       src={poke.image || ''}
@@ -57,7 +66,15 @@ const MyPokemon = () => {
                   <div className="font-bold mb-2 text-gray-600">
                     {capitalize(poke.name)}
                   </div>
-                  <div className="text-gray-600">{poke.types.join(', ')}</div>
+                  <div className="flex items-center justify-center">
+                    {poke.types.map((type) => (
+                      <Badge
+                        variant={type}
+                        key={type}
+                        className="text-xs mx-0"
+                      />
+                    ))}
+                  </div>
                 </CardContent>
               </Card>
             </Link>

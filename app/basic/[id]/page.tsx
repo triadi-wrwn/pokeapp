@@ -1,4 +1,5 @@
 import StaticProgress from '@/components/faceted/StaticProgress/StaticProgress';
+import Badge from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -15,9 +16,7 @@ import ButtonAction from './components/ButtonAction';
 const BasicDetail = async ({ params }: { params: { id: string } }) => {
   const detail = await getPokemonDetail(params.id);
   const species = await getPokemonSpecies(detail.species.url);
-  const handleClick = () => {
-    console.log(detail);
-  };
+
   return (
     <>
       <div className="absolute top-8 left-8">
@@ -43,12 +42,11 @@ const BasicDetail = async ({ params }: { params: { id: string } }) => {
             </div>
             <div className="text-center mt-3">
               {detail.types.map((type) => (
-                <div
+                <Badge
+                  variant={type.type.name}
                   key={type.slot}
-                  className="font-bold text-base inline-block  text-center mx-2 border border-gray-700 rounded-lg py-2 px-3"
-                >
-                  {type.type.name}
-                </div>
+                  className="!text-sm"
+                />
               ))}
             </div>
           </div>
@@ -88,28 +86,28 @@ const BasicDetail = async ({ params }: { params: { id: string } }) => {
                         Growth Rate
                       </TableCell>
                       <TableCell>
-                        {capitalize(species.growth_rate.name)}
+                        {capitalize(species.growth_rate?.name)}
                       </TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell className="w-1/3 text-gray-500">
                         Shape
                       </TableCell>
-                      <TableCell>{capitalize(species.shape.name)}</TableCell>
+                      <TableCell>{capitalize(species.shape?.name)}</TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell className="w-1/3 text-gray-500">
                         Generation
                       </TableCell>
                       <TableCell>
-                        {capitalize(species.generation.name)}
+                        {capitalize(species.generation?.name)}
                       </TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell className="w-1/3 text-gray-500">
                         Habitat
                       </TableCell>
-                      <TableCell>{capitalize(species.habitat.name)}</TableCell>
+                      <TableCell>{capitalize(species.habitat?.name)}</TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell className="w-1/3 text-gray-500">
@@ -160,7 +158,7 @@ const BasicDetail = async ({ params }: { params: { id: string } }) => {
                       <TableCell className="w-1/3 text-gray-500">
                         Color
                       </TableCell>
-                      <TableCell>{capitalize(species.color.name)}</TableCell>
+                      <TableCell>{capitalize(species.color?.name)}</TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell className="w-1/3 text-gray-500">
@@ -240,22 +238,6 @@ const BasicDetail = async ({ params }: { params: { id: string } }) => {
                     height={130}
                   />
                 </div>
-                {/* {Object.keys(detail.sprites).map((key) => {
-                if (
-                  detail.sprites[key] &&
-                  typeof detail.sprites[key] === 'string'
-                ) {
-                  return (
-                    <div key={key}>
-                      <Image
-                        src={detail.sprites[key]}
-                        alt={detail.sprites[key]}
-                      />
-                      ;
-                    </div>
-                  );
-                }
-              })} */}
               </div>
             </TabsContent>
           </Tabs>

@@ -8,7 +8,7 @@ import Link from 'next/link';
 export const columns: ColumnDef<Pokemons>[] = [
   {
     accessorKey: 'name',
-    header: 'Name',
+    header: 'Pokemon Name',
     cell: ({ row }) => (
       <Link href={`./basic/${row.getValue('name')}`}>
         {capitalize(row.getValue('name'))}
