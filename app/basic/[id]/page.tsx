@@ -10,13 +10,17 @@ import {
 import { ArrowLeftIcon, CheckIcon, Cross2Icon } from '@radix-ui/react-icons';
 import Image from 'next/image';
 import Link from 'next/link';
+import ButtonAction from './components/ButtonAction';
 
 const BasicDetail = async ({ params }: { params: { id: string } }) => {
   const detail = await getPokemonDetail(params.id);
   const species = await getPokemonSpecies(detail.species.url);
+  const handleClick = () => {
+    console.log(detail);
+  };
   return (
     <>
-      <div className="absolute top-16 left-16">
+      <div className="absolute top-8 left-8">
         <Link href={'../basic'}>
           <Button variant={'link'}>
             <ArrowLeftIcon width={50} height={50} />
@@ -255,6 +259,9 @@ const BasicDetail = async ({ params }: { params: { id: string } }) => {
               </div>
             </TabsContent>
           </Tabs>
+          <div className="text-center mt-4">
+            <ButtonAction detail={detail} />
+          </div>
         </div>
       </div>
     </>

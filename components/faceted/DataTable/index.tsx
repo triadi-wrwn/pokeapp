@@ -1,2 +1,5 @@
 import DataTable from './DataTable';
-export {DataTable}
+import { DataTableProps } from './DataTable.type';
+
+export { DataTable };
+export type { DataTableProps };

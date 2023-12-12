@@ -1,5 +1,5 @@
 import { responseHandler } from '@/lib/utils';
-import { Pokemon, Pokemons } from '@/types/pokemon.type';
+import { Pokemon, Pokemons, StashedPokemon } from '@/types/pokemon.type';
 import { ResponseList } from '@/types/response.type';
 import { Species } from '@/types/species.type';
 
@@ -20,4 +20,13 @@ const getPokemonSpecies = async (url: string) => {
   return responseHandler<Species>(dataApi);
 };
 
-export { getPokemonDetail, getPokemonSpecies, getPokemons };
+const toStashedModel = (data: Pokemon): StashedPokemon => {
+  return {
+    id: data.id,
+    image: data.sprites.other?.['official-artwork']?.front_default,
+    name: data.name,
+    types: data.types.map((el) => el.type.name),
+  };
+};
+
+export { getPokemonDetail, getPokemonSpecies, getPokemons, toStashedModel };

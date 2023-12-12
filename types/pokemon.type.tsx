@@ -186,3 +186,10 @@ export type Type = {
   slot: number;
   type: Species;
 };
+
+export type StashedPokemon = {
+  name: string;
+  types: string[];
+  id: number;
+  image?: string;
+};
