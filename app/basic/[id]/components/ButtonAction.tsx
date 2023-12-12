@@ -31,7 +31,7 @@ const ButtonAction = (props: ButtonActionProps) => {
 
   useEffect(() => {
     const data: StashedPokemon[] = getStorage(MY_POKE_KEY);
-    const exist = data.find((el) => el.name === detail.name);
+    const exist = data ? data.find((el) => el.name === detail.name) : false;
     setCollected(!!exist);
   }, [open, detail.name]);
 
