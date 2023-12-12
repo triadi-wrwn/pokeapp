@@ -4,3 +4,8 @@ export type ResponseList<T> = {
   previous: string | null;
   results: T;
 };
+
+export type SelectType = {
+  label: string;
+  value: string;
+};

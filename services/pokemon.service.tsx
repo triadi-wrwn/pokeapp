@@ -29,4 +29,33 @@ const toStashedModel = (data: Pokemon): StashedPokemon => {
   };
 };
 
-export { getPokemonDetail, getPokemonSpecies, getPokemons, toStashedModel };
+const getPaginateSelectPokemon = async (
+  _search: string,
+  _prevOpt: any,
+  { offset, limit }: any
+) => {
+  const dataApi = await fetch(
+    `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset || 0}`
+  );
+  const ressData = await responseHandler<ResponseList<Pokemons[]>>(dataApi);
+  const filteredOptions = ressData.results.map((el) => ({
+    label: el.name,
+    value: el.name,
+  }));
+  return {
+    options: filteredOptions,
+    hasMore: !!ressData.next,
+    additional: {
+      offset: offset + limit,
+      limit,
+    },
+  };
+};
+
+export {
+  getPaginateSelectPokemon,
+  getPokemonDetail,
+  getPokemonSpecies,
+  getPokemons,
+  toStashedModel,
+};
