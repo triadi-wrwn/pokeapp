@@ -15,7 +15,7 @@ import { useState } from 'react';
 
 const MyPokemon = () => {
   const initData: StashedPokemon[] = getStorage(MY_POKE_KEY);
-  const [pokemons, setPokemons] = useState<StashedPokemon[]>(initData);
+  const [pokemons, setPokemons] = useState<StashedPokemon[]>(initData || []);
 
   const { toast } = useToast();
   const handleRemove = (poke: StashedPokemon) => {
